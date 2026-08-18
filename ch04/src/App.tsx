@@ -1,22 +1,38 @@
 import { useState } from 'react';
 import './App.css'
+import Count from './components/Count';
 
 function App() {
   const [count, setCount] = useState(0);
-  const clickHandler = () => setCount(count=>count+1);
-  let name2 = '변우석';
-  const age = 20;
-  const nameChange = () => {
-    name2 ='영희';
-    console.log(name2);
+  const [name, setName] = useState<string | null>(null);
+  const [age,setAge] = useState<number | null>(null);
+  const [gender,setGender] = useState<string | null>(null);
+  const clickHandler = () => {
+    // setCount(count => count + 1)
+    setCount((count)=>{return count+1});
+    setCount((count)=>{return count+1});
+    setCount((count)=>{return count+1});
+  /*   setCount(count+1);
+    setCount(count+1);
+    setCount(count+1); */
+  };
+  //let name2 = '변우석';
+  //const age = 20;
+  const clickHandler2 = () => {
+    setName('Mike');
+    setAge(23);
+    setGender('female');
   }
   return (
     <div>
-      <p>{name2}</p>
+      <p>{name}</p>
       <p>{age}</p>
-      <button onClick={nameChange}>이름바꾸기</button>
+      <p>{gender}</p>
+      <button onClick={clickHandler2}>이름나이성별바꾸기</button>
       <h1>count : {count}</h1>
       <button onClick={clickHandler}>증가</button>
+      <hr/>
+      <Count count={count} setCount={setCount}/>
     </div>
   )
 }
