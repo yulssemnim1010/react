@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import './App.css'
 import Count from './components/Count';
+import Layout from './components/Layout';
 
 function App() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState<string | null>(null);
   const [age,setAge] = useState<number | null>(null);
   const [gender,setGender] = useState<string | null>(null);
+  const increment = () => setCount(count=>count+1);
   const clickHandler = () => {
     // setCount(count => count + 1)
     setCount((count)=>{return count+1});
@@ -32,7 +34,8 @@ function App() {
       <h1>count : {count}</h1>
       <button onClick={clickHandler}>증가</button>
       <hr/>
-      <Count count={count} setCount={setCount}/>
+      <Count count={count} increment={increment}/>
+      <Layout />
     </div>
   )
 }
