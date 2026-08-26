@@ -64,12 +64,14 @@ export function App() {
   //여러 화면의 skip 버튼이 똑같이 로그인으로 가므로, 한 함수를 함께 사용
   const handleSkip = (): void => {handleNavigate('login');}
 
+
+
   return (
     <main className='app_shell' aria-label='fitnote workspace'>
       {currentPage === 'splash' ? (
         <SplashPage onNext={() => {handleNavigate('onboarding_01')}} />) : null}
       {currentPage === 'onboarding_01' ? (
-        <Onboarding01Page onNext={() => handleNavigate('onboarding_01')} onSkip={handleSkip} />) : null}
+        <Onboarding01Page onNext={() => handleNavigate('onboarding_02')} onSkip={handleSkip} />) : null}
       {currentPage === 'onboarding_02' ? (
         <Onboarding02Page onNext={() => handleNavigate('onboarding_03')} onSkip={handleSkip} />) : null}
       {currentPage === 'onboarding_03' ? (
