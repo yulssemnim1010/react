@@ -1,11 +1,12 @@
 import './App.css'
-import LoginForm from './components/LoginForm'
+import Dynamic from './components/Dynamic'
+
 
 
 function App() {
   return (
     <>
-     <LoginForm /> 
+      <Dynamic/>
     </>
   )
 }
