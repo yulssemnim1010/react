@@ -5,66 +5,47 @@ import Button from './components/html/Button';
 import Input from './components/html/Input';
 import Checkbox from './components/html/Checkbox';
 import TodoHeader from './components/TodoHeader';
+import TodoEditor from './components/TodoEditor';
+import TodoList from './components/TodoList';
+import { useState } from 'react';
 function App() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const addTodo = (title: string) => {
+    setTodos((todos) => [
+      ...todos,
+      { id: new Date().getTime(), 
+        title,
+        done:false,
+      }
+    ])
 
-  return (
-    <>
-      <div className="todo">
-        <TodoHeader />
-        {/* <!-- 할 일 등록 --> */}
-        <form className="todo__form">
-          <div className="todo__editor">
-            <Input
-              type="text"
-              className="todo__input"
-              placeholder="Enter Todo List"
-            />
-            <Button className="todo__button" type="submit">Add</Button>
-          </div>
-        </form>
-        {/* <!-- 할 일 목록 --> */}
-        <ul className="todo__list">
-          {/* <!-- 할 일 목록이 없을 때 --> */}
-          <li className="todo__item todo__item--empty">
-            <p className="todo__text--empty">There are no registered tasks</p>
-          </li>
-          {/* <!-- 할 일 목록이 있을 때 --> */}
-          {/* <!-- 할 일이 완료되면 .todo__item--complete 추가 --> */}
-          <li className="todo__item todo__item--complete">
-            <Checkbox parentClassName='todo__checkbox-group' type="checkbox" className="todo__checkbox" checked>
-              Eat Breakfast
-            </Checkbox>
-            {/*할 일을 수정할 때만 노출 (.todo__checkbox-group은 비노출) */}
-            {/*     <input type="text" className="todo__modify-input" /> */}
-            <div className="todo__button-group">
-              <Button className="todo__action-button">
-                <SvgPencill />
-              </Button>
-              <Button className="todo__action-button">
-                <SvgClose />
-              </Button>
-            </div>
-          </li>
-          <li className="todo__item todo__item--complete">
-            {/*   <!-- <div className="todo__checkbox-group">
-              <input type="checkbox" className="todo__checkbox" checked />
-              <label>Eat Breakfast</label>
-            </div> --> */}
-            {/*     <!-- 할 일을 수정할 때만 노출 (.todo__checkbox-group은 비노출) --> */}
-            <Input type="text" className="todo__modify-input" />
-            <div className="todo__button-group">
-              <Button className="todo__action-button">
-                <SvgPencill />
-              </Button>
-              <Button className="todo__action-button">
-                <SvgClose />
-              </Button>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </>
+}
+const toggleTodo = (id:number) =>{
+  setTodos((todos) =>
+    todos.map(todo=>
+      todo.id === id ?{...todo,done:!todo.done} :todo
+    )
   )
+}
+const deleteTodo = (id:number) =>{
+  setTodos((todos)=>todos.filter((todo)=>todo.id !==id))
+}
+const modifyTodo = (id:number,title:string)=>{
+setTodos((todos)=>(
+  todos.map((todo)=>(todo.id === id ? {...todo,title} :todo))
+))
+}
+return (
+  <>
+    <div className="todo">
+      <TodoHeader />
+      {/* <!-- 할 일 등록 --> */}
+      <TodoEditor addTodo={addTodo}/>
+      {/* <!-- 할 일 목록 --> */}
+      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} modifyTodo={modifyTodo}/>
+    </div>
+  </>
+)
 }
 
 export default App
